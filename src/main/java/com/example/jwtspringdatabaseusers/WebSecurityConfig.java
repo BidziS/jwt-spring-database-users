@@ -1,5 +1,7 @@
 package com.example.jwtspringdatabaseusers;
 
+import com.example.jwtspringdatabaseusers.authority.AuthorityEntity;
+import com.example.jwtspringdatabaseusers.authority.IAuthorityRepository;
 import com.example.jwtspringdatabaseusers.security.JWTAuthenticationFilter;
 import com.example.jwtspringdatabaseusers.security.JWTLoginFilter;
 import com.example.jwtspringdatabaseusers.user.entity.UserEntity;
@@ -9,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,16 +23,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    IUserRepository userRepository;
+    private IUserRepository userRepository;
+
+    @Autowired
+    private IAuthorityRepository authorityRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -68,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     return new User(user.getEmail(),
                             user.getPassword(),
                             true,true,true,true,
-                            getAuthorities());
+                            getAuthorities(user.getAuthorities()));
 
                 }
                 else {
@@ -80,9 +88,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
 
     }
-    private Collection<? extends GrantedAuthority> getAuthorities(){
+    private Collection<? extends GrantedAuthority> getAuthorities(List<AuthorityEntity> authorities){
         List<GrantedAuthority> authList = new ArrayList<>();
-        authList.add(new SimpleGrantedAuthority("ADMIN"));
+
+        for (AuthorityEntity authority : authorities){
+            authList.add(new SimpleGrantedAuthority(authority.getName()));
+        }
+
         return authList;
     }
 

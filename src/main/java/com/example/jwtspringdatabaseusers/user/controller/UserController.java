@@ -18,14 +18,14 @@ public class UserController {
     IUserRepository userRepository;
 
     @RequestMapping(value="/getAll", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ResponseBody
     public ResponseEntity<List<UserEntity>> getAllAuthors(){
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value="/getById/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('USER')")
+    @PreAuthorize("hasAnyRole('USER')")
     @ResponseBody
     public ResponseEntity<UserEntity> getById(@PathVariable("id") Long id){
         return new ResponseEntity<>(userRepository.findOne(id), HttpStatus.OK);

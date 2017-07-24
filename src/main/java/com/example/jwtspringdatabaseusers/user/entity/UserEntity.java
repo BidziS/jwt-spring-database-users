@@ -1,9 +1,11 @@
 package com.example.jwtspringdatabaseusers.user.entity;
 
+import com.example.jwtspringdatabaseusers.authority.AuthorityEntity;
 import com.example.jwtspringdatabaseusers.base.entity.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,14 +23,19 @@ public class UserEntity extends BaseEntity {
 
     private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")
+    private List<AuthorityEntity> authorities;
+
     public UserEntity() {
     }
 
-    public UserEntity(String firstName, String lastName, String email, String password) {
+    public UserEntity(String firstName, String lastName, String email, String password, List<AuthorityEntity> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.authorities = authorities;
     }
 
     public String getFirstName() {
@@ -61,5 +68,13 @@ public class UserEntity extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<AuthorityEntity> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<AuthorityEntity> authorities) {
+        this.authorities = authorities;
     }
 }
