@@ -1,8 +1,8 @@
 package com.example.jwtspringdatabaseusers;
 
-import com.example.jwtspringdatabaseusers.authority.entity.AuthorityEntity;
+import com.example.jwtspringdatabaseusers.authority.entity.Authority;
 import com.example.jwtspringdatabaseusers.authority.repository.IAuthorityRepository;
-import com.example.jwtspringdatabaseusers.user.entity.UserEntity;
+import com.example.jwtspringdatabaseusers.user.entity.User;
 import com.example.jwtspringdatabaseusers.user.repository.IUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
@@ -22,30 +22,31 @@ public class JwtSpringDatabaseUsersApplication {
 
 	@Bean
 	public ModelMapper modelMapper() {
+
 		return new ModelMapper();
 	}
 
 	@Bean
 	public CommandLineRunner init(IUserRepository userRepository, IAuthorityRepository authorityRepository){
 
-		AuthorityEntity authorityUser = new AuthorityEntity("ROLE_USER");
+		Authority authorityUser = new Authority("ROLE_USER");
 		authorityRepository.save(authorityUser);
 
-		AuthorityEntity authorityAdmin = new AuthorityEntity("ROLE_ADMIN");
+		Authority authorityAdmin = new Authority("ROLE_ADMIN");
 		authorityRepository.save(authorityAdmin);
 
-		List<AuthorityEntity> adminAuthorities = authorityRepository.findAll();
+		List<Authority> adminAuthorities = authorityRepository.findAll();
 
-		List<AuthorityEntity> userAuthorities = new ArrayList<>();
+		List<Authority> userAuthorities = new ArrayList<>();
 		userAuthorities.add(authorityUser);
 
-		UserEntity user = new UserEntity("Daniel","Cudnik", "danio@o2.pl", "123456", true, userAuthorities);
+		User user = new User("Daniel","Cudnik", "danio@o2.pl", "123456", true, userAuthorities);
 		userRepository.save(user);
 
-		UserEntity admin = new UserEntity("Daniel","Cudnik", "admin@o2.pl", "123456", true,adminAuthorities);
+		User admin = new User("Daniel","Cudnik", "admin@o2.pl", "123456", true,adminAuthorities);
 		userRepository.save(admin);
 
-		List<UserEntity> users = userRepository.findAll();
+		List<User> users = userRepository.findAll();
 
 		return null;
 	}

@@ -1,9 +1,9 @@
 package com.example.jwtspringdatabaseusers.authority.entity;
 
 import com.example.jwtspringdatabaseusers.base.entity.BaseEntity;
-import com.example.jwtspringdatabaseusers.user.entity.UserEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -12,14 +12,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "authorities")
 @SequenceGenerator(allocationSize = 1, name = "SEQ", sequenceName = "GEN_AUTHORITY_ID")
-public class AuthorityEntity extends BaseEntity {
+public class Authority extends BaseEntity {
 
+    @NotNull
     private String name;
 
-    public AuthorityEntity() {
+    public Authority() {
     }
 
-    public AuthorityEntity(String name) {
+    public Authority(String name) {
         this.name = name;
     }
 

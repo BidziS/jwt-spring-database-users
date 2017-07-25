@@ -1,6 +1,6 @@
 package com.example.jwtspringdatabaseusers.user.entity;
 
-import com.example.jwtspringdatabaseusers.authority.entity.AuthorityEntity;
+import com.example.jwtspringdatabaseusers.authority.entity.Authority;
 import com.example.jwtspringdatabaseusers.base.entity.BaseEntity;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @SequenceGenerator(allocationSize = 1, name = "SEQ", sequenceName = "GEN_USER_ID")
-public class UserEntity extends BaseEntity {
+public class User extends BaseEntity {
 
     @Column(name = "first_name")
     private String firstName;
@@ -30,12 +30,12 @@ public class UserEntity extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")
-    private List<AuthorityEntity> authorities;
+    private List<Authority> authorities;
 
-    public UserEntity() {
+    public User() {
     }
 
-    public UserEntity(String firstName, String lastName, String email, String password, boolean isActive, List<AuthorityEntity> authorities) {
+    public User(String firstName, String lastName, String email, String password, boolean isActive, List<Authority> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -84,11 +84,11 @@ public class UserEntity extends BaseEntity {
         isActive = active;
     }
 
-    public List<AuthorityEntity> getAuthorities() {
+    public List<Authority> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(List<AuthorityEntity> authorities) {
+    public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
     }
 }

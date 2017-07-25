@@ -1,7 +1,7 @@
 package com.example.jwtspringdatabaseusers.security;
 
-import com.example.jwtspringdatabaseusers.authority.entity.AuthorityEntity;
-import com.example.jwtspringdatabaseusers.user.entity.UserEntity;
+import com.example.jwtspringdatabaseusers.authority.entity.Authority;
+import com.example.jwtspringdatabaseusers.user.entity.User;
 import com.example.jwtspringdatabaseusers.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,12 +30,12 @@ public class AuthenticationRepository {
     }
 
     public static Collection<? extends GrantedAuthority> getAuthorities(String email){
-        UserEntity user = userRepositoryS.findByEmail(email);
+        User user = userRepositoryS.findByEmail(email);
 
-        List<AuthorityEntity> authorities = user.getAuthorities();
+        List<Authority> authorities = user.getAuthorities();
 
         List<GrantedAuthority> authList = new ArrayList<>();
-        for (AuthorityEntity authority : authorities){
+        for (Authority authority : authorities){
             authList.add(new SimpleGrantedAuthority(authority.getName()));
         }
         return authList;
