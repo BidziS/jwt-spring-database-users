@@ -1,9 +1,10 @@
 package com.example.jwtspringdatabaseusers.user.entity;
 
-import com.example.jwtspringdatabaseusers.authority.AuthorityEntity;
+import com.example.jwtspringdatabaseusers.authority.entity.AuthorityEntity;
 import com.example.jwtspringdatabaseusers.base.entity.BaseEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -17,10 +18,15 @@ public class UserEntity extends BaseEntity {
     @Column(name = "last_name")
     private String lastName;
 
+    @NotNull
     @Column(unique = true)
     private String email;
 
+    @NotNull
     private String password;
+
+    @NotNull
+    private boolean isActive;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")
@@ -29,11 +35,12 @@ public class UserEntity extends BaseEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String firstName, String lastName, String email, String password, List<AuthorityEntity> authorities) {
+    public UserEntity(String firstName, String lastName, String email, String password, boolean isActive, List<AuthorityEntity> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.isActive = isActive;
         this.authorities = authorities;
     }
 
@@ -67,6 +74,14 @@ public class UserEntity extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public List<AuthorityEntity> getAuthorities() {

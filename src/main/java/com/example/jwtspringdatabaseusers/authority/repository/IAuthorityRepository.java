@@ -1,5 +1,6 @@
-package com.example.jwtspringdatabaseusers.authority;
+package com.example.jwtspringdatabaseusers.authority.repository;
 
+import com.example.jwtspringdatabaseusers.authority.entity.AuthorityEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

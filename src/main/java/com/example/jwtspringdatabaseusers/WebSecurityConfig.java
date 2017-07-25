@@ -1,6 +1,6 @@
 package com.example.jwtspringdatabaseusers;
 
-import com.example.jwtspringdatabaseusers.authority.IAuthorityRepository;
+import com.example.jwtspringdatabaseusers.authority.repository.IAuthorityRepository;
 import com.example.jwtspringdatabaseusers.security.JWTAuthenticationFilter;
 import com.example.jwtspringdatabaseusers.security.JWTLoginFilter;
 import com.example.jwtspringdatabaseusers.user.entity.UserEntity;

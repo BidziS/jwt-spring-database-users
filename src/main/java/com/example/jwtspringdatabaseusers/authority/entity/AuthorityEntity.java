@@ -1,4 +1,4 @@
-package com.example.jwtspringdatabaseusers.authority;
+package com.example.jwtspringdatabaseusers.authority.entity;
 
 import com.example.jwtspringdatabaseusers.base.entity.BaseEntity;
 import com.example.jwtspringdatabaseusers.user.entity.UserEntity;

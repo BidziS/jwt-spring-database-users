@@ -1,6 +1,6 @@
 package com.example.jwtspringdatabaseusers.security;
 
-import com.example.jwtspringdatabaseusers.authority.AuthorityEntity;
+import com.example.jwtspringdatabaseusers.authority.entity.AuthorityEntity;
 import com.example.jwtspringdatabaseusers.user.entity.UserEntity;
 import com.example.jwtspringdatabaseusers.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
