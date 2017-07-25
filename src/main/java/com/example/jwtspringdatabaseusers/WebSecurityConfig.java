@@ -1,11 +1,11 @@
 package com.example.jwtspringdatabaseusers;
 
-import com.example.jwtspringdatabaseusers.authority.AuthorityEntity;
 import com.example.jwtspringdatabaseusers.authority.IAuthorityRepository;
 import com.example.jwtspringdatabaseusers.security.JWTAuthenticationFilter;
 import com.example.jwtspringdatabaseusers.security.JWTLoginFilter;
 import com.example.jwtspringdatabaseusers.user.entity.UserEntity;
 import com.example.jwtspringdatabaseusers.user.repository.IUserRepository;
+import com.example.jwtspringdatabaseusers.security.AuthenticationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,18 +15,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -76,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     return new User(user.getEmail(),
                             user.getPassword(),
                             true,true,true,true,
-                            getAuthorities(user.getAuthorities()));
+                            AuthenticationRepository.getAuthorities(user.getEmail()));
 
                 }
                 else {
@@ -88,16 +82,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
 
     }
-    private Collection<? extends GrantedAuthority> getAuthorities(List<AuthorityEntity> authorities){
-        List<GrantedAuthority> authList = new ArrayList<>();
-
-        for (AuthorityEntity authority : authorities){
-            authList.add(new SimpleGrantedAuthority(authority.getName()));
-        }
-
-        return authList;
-    }
-
-
 
 }

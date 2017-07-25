@@ -4,7 +4,6 @@ import com.example.jwtspringdatabaseusers.authority.AuthorityEntity;
 import com.example.jwtspringdatabaseusers.base.entity.BaseEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity

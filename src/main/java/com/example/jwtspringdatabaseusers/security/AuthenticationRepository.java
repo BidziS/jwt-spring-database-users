@@ -1,7 +1,8 @@
-package com.example.jwtspringdatabaseusers.user.repository;
+package com.example.jwtspringdatabaseusers.security;
 
 import com.example.jwtspringdatabaseusers.authority.AuthorityEntity;
 import com.example.jwtspringdatabaseusers.user.entity.UserEntity;
+import com.example.jwtspringdatabaseusers.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by Bidzis on 7/24/2017.
  */
 @Component
-public class UserRepo {
+public class AuthenticationRepository {
 
     private static IUserRepository userRepositoryS;
 
