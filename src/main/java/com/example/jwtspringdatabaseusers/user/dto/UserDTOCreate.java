@@ -1,30 +1,19 @@
-package com.example.jwtspringdatabaseusers.user.entity;
+package com.example.jwtspringdatabaseusers.user.dto;
 
-import com.example.jwtspringdatabaseusers.base.entity.BaseEntity;
+public class UserDTOCreate {
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
-@Entity
-@Table(name = "users")
-@SequenceGenerator(allocationSize = 1, name = "SEQ", sequenceName = "GEN_USER_ID")
-public class UserEntity extends BaseEntity {
-
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name")
     private String lastName;
 
-    @Column(unique = true)
     private String email;
 
     private String password;
 
-    public UserEntity() {
+    public UserDTOCreate() {
     }
 
-    public UserEntity(String firstName, String lastName, String email, String password) {
+    public UserDTOCreate(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

@@ -1,35 +1,47 @@
-package com.example.jwtspringdatabaseusers.user.dto;
+package com.example.jwtspringdatabaseusers.user.entity;
 
-import com.example.jwtspringdatabaseusers.authority.dto.AuthorityDTO;
-import com.example.jwtspringdatabaseusers.base.dto.BaseDTO;
+import com.example.jwtspringdatabaseusers.authority.entity.Authority;
+import com.example.jwtspringdatabaseusers.base.entity.BaseEntity;
 
-import java.util.Date;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
+@SequenceGenerator(allocationSize = 1, name = "SEQ", sequenceName = "GEN_USER_ID")
+public class User extends BaseEntity {
 
-public class UserDTO extends BaseDTO{
-
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @NotNull
+    @Column(unique = true)
     private String email;
 
+    @NotNull
     private String password;
 
+    @NotNull
     private boolean isActive;
 
-    private List<AuthorityDTO> authorities;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")
+    private List<Authority> authorities;
 
-    public UserDTO() {
+    public User() {
     }
 
-    public UserDTO(Long id, Date techDate, String firstName, String lastName, String email, String password) {
-        super(id, techDate);
+    public User(String firstName, String lastName, String email, String password, boolean isActive, List<Authority> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.isActive = isActive;
+        this.authorities = authorities;
     }
 
     public String getFirstName() {
@@ -72,11 +84,11 @@ public class UserDTO extends BaseDTO{
         isActive = active;
     }
 
-    public List<AuthorityDTO> getAuthorities() {
+    public List<Authority> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(List<AuthorityDTO> authorities) {
+    public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
     }
 }

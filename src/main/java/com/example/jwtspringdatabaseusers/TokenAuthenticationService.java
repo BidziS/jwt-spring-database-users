@@ -1,20 +1,14 @@
 package com.example.jwtspringdatabaseusers;
 
+import com.example.jwtspringdatabaseusers.security.AuthenticationRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-
-import static java.util.Collections.emptyList;
 
 public class TokenAuthenticationService {
     static final long EXPIRATIONTIME = 864_000_000; // 10 days
@@ -31,7 +25,11 @@ public class TokenAuthenticationService {
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
     }
 
+
+
     public static Authentication getAuthentication(HttpServletRequest request) {
+
+        TokenAuthenticationService t = new TokenAuthenticationService();
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
             // parse the token.
@@ -41,17 +39,10 @@ public class TokenAuthenticationService {
                     .getBody()
                     .getSubject();
 
-
-
             return user != null ?
-                    new UsernamePasswordAuthenticationToken(user, null, getAuthorities()) :
+                    new UsernamePasswordAuthenticationToken(user, null, AuthenticationRepository.getAuthorities(user)) :
                     null;
         }
         return null;
-    }
-    public static Collection<? extends GrantedAuthority> getAuthorities(){
-        List<GrantedAuthority> authList = new ArrayList<>();
-        authList.add(new SimpleGrantedAuthority("USER"));
-        return authList;
     }
 }
